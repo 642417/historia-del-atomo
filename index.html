@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La historia del átomo — Línea del tiempo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Literata:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d1017;
+    --ink-2:#161b26;
+    --parchment:#e9dfc4;
+    --copper:#c17d43;
+    --cyan:#5fe1e8;
+    --cyan-dim:#3a8f94;
+    --text:#f1ede1;
+    --muted:#8993a6;
+    --line:#2a3040;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Literata',serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Fraunces',serif;}
+  .mono{font-family:'IBM Plex Mono',monospace; letter-spacing:.03em;}
+
+  /* ---------- COVER ---------- */
+  .cover{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:8vh 6vw 6vh;
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at 20% 15%, rgba(193,125,67,.18), transparent 55%),
+      radial-gradient(ellipse at 85% 80%, rgba(95,225,232,.14), transparent 55%),
+      var(--ink);
+  }
+  .cover-orbit{
+    position:absolute; right:-8%; top:50%; transform:translateY(-50%);
+    width:min(70vw,620px); height:min(70vw,620px); opacity:.55;
+    pointer-events:none;
+  }
+  .cover-eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    font-size:.72rem;
+    color:var(--cyan);
+    margin-bottom:1.1rem;
+  }
+  .cover h1{
+    font-size:clamp(2.4rem,6vw,4.6rem);
+    font-weight:600;
+    line-height:1.03;
+    margin:0 0 .6rem;
+    max-width:14ch;
+    color:var(--parchment);
+  }
+  .cover h1 em{
+    font-style:italic;
+    color:var(--cyan);
+    font-weight:400;
+  }
+  .cover p.lede{
+    max-width:46ch;
+    color:var(--muted);
+    font-size:1.05rem;
+    margin:0 0 2.6rem;
+  }
+  .school-block{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.78rem;
+    color:var(--muted);
+    margin-bottom:2.4rem;
+  }
+  .school-block strong{color:var(--text); font-weight:500;}
+
+  .cover-form{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(180px,320px));
+    gap:1.1rem 2.4rem;
+    max-width:720px;
+  }
+  .field{display:flex; flex-direction:column; gap:.35rem;}
+  .field label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:var(--muted);
+  }
+  .field input{
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--line);
+    color:var(--text);
+    font-family:'Literata',serif;
+    font-size:1rem;
+    padding:.3rem .1rem;
+    outline:none;
+    transition:border-color .2s;
+  }
+  .field input:focus{border-bottom-color:var(--cyan);}
+  .field .static-value{
+    color:var(--text);
+    font-family:'Literata',serif;
+    font-size:1rem;
+    padding:.3rem .1rem;
+    border-bottom:1px solid var(--line);
+  }
+
+  .scroll-hint{
+    position:absolute; bottom:2.2rem; left:6vw;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--muted);
+    display:flex; align-items:center; gap:.6rem;
+  }
+  .scroll-hint::after{
+    content:'';
+    width:1px; height:26px;
+    background:linear-gradient(var(--cyan),transparent);
+    animation:drip 1.8s infinite;
+  }
+  @keyframes drip{0%{opacity:0; transform:translateY(-6px);}50%{opacity:1;}100%{opacity:0; transform:translateY(6px);}}
+
+  /* ---------- INTRO STRIP ---------- */
+  .intro{
+    padding:5rem 6vw 3rem;
+    max-width:900px;
+  }
+  .intro .kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--copper);
+    margin-bottom:.8rem;
+  }
+  .intro h2{
+    font-size:clamp(1.6rem,3.2vw,2.3rem);
+    font-weight:600; color:var(--parchment);
+    margin:0 0 1rem;
+  }
+  .intro p{color:var(--muted); max-width:64ch; font-size:1.02rem;}
+  .legend{
+    display:flex; gap:1.6rem; flex-wrap:wrap; margin-top:2rem;
+    font-family:'IBM Plex Mono',monospace; font-size:.72rem; color:var(--muted);
+  }
+  .legend span{display:inline-flex; align-items:center; gap:.5rem;}
+  .legend i{width:10px; height:10px; border-radius:50%; display:inline-block;}
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{
+    position:relative;
+    max-width:1000px;
+    margin:0 auto;
+    padding:2rem 6vw 8rem;
+  }
+  .spine{
+    position:absolute;
+    left:calc(6vw + 27px);
+    top:0; bottom:0;
+    width:2px;
+    background:linear-gradient(to bottom,
+      var(--parchment) 0%, var(--parchment) 8%,
+      var(--copper) 8%, var(--copper) 46%,
+      var(--cyan-dim) 46%, var(--cyan) 100%);
+    opacity:.55;
+  }
+  .era-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--muted);
+    margin:3.4rem 0 1.2rem 62px;
+    display:flex; align-items:center; gap:.7rem;
+  }
+  .era-label:first-of-type{margin-top:1rem;}
+  .era-label::before{content:''; width:18px; height:1px; background:var(--muted);}
+
+  .node{
+    position:relative;
+    margin-left:62px;
+    margin-bottom:1.1rem;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:var(--ink-2);
+    overflow:hidden;
+    transition:border-color .25s;
+  }
+  .node.open{border-color:var(--cyan-dim);}
+  .dot{
+    position:absolute;
+    left:-49px; top:26px;
+    width:14px; height:14px;
+    border-radius:50%;
+    background:var(--ink);
+    border:2px solid var(--muted);
+    z-index:2;
+  }
+  .node[data-era="antiguo"] .dot{border-color:var(--parchment); background:var(--parchment);}
+  .node[data-era="clasico"] .dot{border-color:var(--copper); background:var(--ink);}
+  .node[data-era="cuantico"] .dot{border-color:var(--cyan); background:var(--ink); box-shadow:0 0 0 4px rgba(95,225,232,.12);}
+
+  .node-head{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:1.1rem;
+    padding:1.1rem 1.4rem;
+    background:none;
+    border:none;
+    cursor:pointer;
+    text-align:left;
+    color:inherit;
+    font:inherit;
+  }
+  .node-head:hover{background:rgba(255,255,255,.02);}
+  .portrait{
+    display:block;
+    width:44px; height:44px;
+    border-radius:50%;
+    overflow:hidden;
+    flex-shrink:0;
+    border:1.5px solid var(--line);
+    background:#1c2230;
+  }
+  .portrait img{width:100%; height:100%; object-fit:cover; object-position:center 20%; display:block;}
+  .node[data-era="antiguo"] .portrait{border-color:var(--parchment);}
+  .node[data-era="clasico"] .portrait{border-color:var(--copper);}
+  .node[data-era="cuantico"] .portrait{border-color:var(--cyan-dim);}
+  .year{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.78rem;
+    color:var(--muted);
+    min-width:64px;
+  }
+  .node-name{
+    font-family:'Fraunces',serif;
+    font-size:1.25rem;
+    font-weight:600;
+    color:var(--text);
+    flex:1;
+  }
+  .node-tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;
+    color:var(--cyan-dim);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    display:none;
+  }
+  @media(min-width:640px){.node-tag{display:block;}}
+  .chevron{
+    width:20px; height:20px; flex-shrink:0;
+    color:var(--muted);
+    transition:transform .25s;
+  }
+  .node.open .chevron{transform:rotate(45deg); color:var(--cyan);}
+
+  .node-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .node.open .node-body{max-height:900px;}
+  .node-body-inner{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:1.6rem;
+    padding:0 1.4rem 1.6rem;
+  }
+  @media(max-width:640px){.node-body-inner{grid-template-columns:1fr;}}
+
+  .diagram-col{display:flex; flex-direction:column; gap:.9rem;}
+  .portrait-card{
+    display:flex; align-items:center; gap:.8rem;
+    background:#0a0d13;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:.7rem .9rem;
+  }
+  .portrait-lg{
+    display:block;
+    width:56px; height:56px;
+    border-radius:50%;
+    overflow:hidden;
+    border:1.5px solid var(--line);
+    flex-shrink:0;
+    background:#1c2230;
+  }
+  .portrait-lg img{width:100%; height:100%; object-fit:cover; object-position:center 20%; display:block;}
+  .node[data-era="antiguo"] .portrait-lg{border-color:var(--parchment);}
+  .node[data-era="clasico"] .portrait-lg{border-color:var(--copper);}
+  .node[data-era="cuantico"] .portrait-lg{border-color:var(--cyan-dim);}
+  .portrait-card .who{display:flex; flex-direction:column; gap:.15rem;}
+  .portrait-card .who strong{
+    font-family:'Fraunces',serif; font-size:1rem; color:var(--text);
+  }
+  .portrait-card .who span{
+    font-family:'IBM Plex Mono',monospace; font-size:.68rem; color:var(--muted);
+  }
+  .diagram{
+    background:#0a0d13;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:.8rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:170px;
+  }
+  .diagram svg{width:100%; height:auto; max-height:200px;}
+
+  .content h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--copper);
+    margin:0 0 .5rem;
+  }
+  .content p{
+    margin:0 0 1rem;
+    color:#d7d2c4;
+    font-size:.98rem;
+  }
+  .content p:last-child{margin-bottom:0;}
+
+  footer{
+    padding:3rem 6vw 5rem;
+    color:var(--muted);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;
+    text-align:center;
+    border-top:1px solid var(--line);
+    max-width:1000px;
+    margin:0 auto;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important; transition:none !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <svg class="cover-orbit" viewBox="0 0 400 400" fill="none">
+    <circle cx="200" cy="200" r="6" fill="#5fe1e8"/>
+    <ellipse cx="200" cy="200" rx="160" ry="60" stroke="#3a8f94" stroke-width="1" opacity=".5" transform="rotate(20 200 200)"/>
+    <ellipse cx="200" cy="200" rx="160" ry="60" stroke="#c17d43" stroke-width="1" opacity=".5" transform="rotate(80 200 200)"/>
+    <ellipse cx="200" cy="200" rx="160" ry="60" stroke="#e9dfc4" stroke-width="1" opacity=".35" transform="rotate(140 200 200)"/>
+    <circle cx="200" cy="60" r="4" fill="#5fe1e8"><animateTransform attributeName="transform" type="rotate" from="20 200 200" to="380 200 200" dur="14s" repeatCount="indefinite"/></circle>
+    <circle cx="200" cy="140" r="4" fill="#c17d43"><animateTransform attributeName="transform" type="rotate" from="80 200 200" to="440 200 200" dur="10s" repeatCount="indefinite"/></circle>
+    <circle cx="200" cy="140" r="3.2" fill="#e9dfc4"><animateTransform attributeName="transform" type="rotate" from="140 200 200" to="500 200 200" dur="18s" repeatCount="indefinite"/></circle>
+  </svg>
+
+  <div class="cover-eyebrow">CTP Mario Quirós Sasso — Química 11mo — Tarea #1</div>
+  <h1>La historia del <em>átomo</em></h1>
+  <p class="lede">Una línea del tiempo de los modelos atómicos, desde la especulación filosófica de la Antigua Grecia hasta la mecánica cuántica. Toca cada tarjeta para ver el aporte del científico, su modelo dibujado y su año.</p>
+
+  <div class="school-block">
+    Profesora: <strong>Melissa Hidalgo Quesada</strong> · Periodo <strong>II</strong> · Nivel <strong>11mo</strong> · Puntos: <strong>32</strong> (10%)
+  </div>
+
+  <div class="cover-form">
+    <div class="field"><label>Estudiante</label><div class="static-value">Santiago Fonseca A y Keylin Ponce C</div></div>
+    <div class="field"><label>Sección</label><div class="static-value">11-2</div></div>
+    <div class="field"><label>Fecha de entrega</label><div class="static-value">27/07/2026</div></div>
+    <div class="field"><label>Periodo</label><div class="static-value">II</div></div>
+  </div>
+
+  <div class="scroll-hint">Desliza para empezar</div>
+</section>
+
+<section class="intro">
+  <div class="kicker">Indicador · trabajo cotidiano</div>
+  <h2>Diez científicos, un mismo átomo que nunca dejó de cambiar</h2>
+  <p>Cada modelo no borró al anterior: lo corrigió. De la esfera maciza de Dalton a la nube de probabilidad de Schrödinger, el átomo pasó de ser una idea filosófica indivisible a una estructura con núcleo, partículas subatómicas y comportamiento ondulatorio. Toca cualquier tarjeta de la línea de tiempo para expandirla.</p>
+  <div class="legend">
+    <span><i style="background:#e9dfc4"></i>Antigüedad</span>
+    <span><i style="background:#c17d43"></i>Modelo clásico</span>
+    <span><i style="background:#5fe1e8"></i>Modelo cuántico</span>
+  </div>
+</section>
+
+<div class="timeline" id="timeline"></div>
+
+<footer>
+  Química · 11mo · Modelos atómicos — hecho para la Tarea #1
+</footer>
+
+<script>
+// Genera un busto ilustrado sencillo (silueta) para cada científico.
+// skin = tono del rostro/hombros, hair = forma del cabello/tocado,
+// extra = detalles opcionales (lentes, bigote, corbata, laurel, pipa...)
+function bust(hair, extra){
+  return `<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+    <rect width="120" height="140" fill="#141926"/>
+    <path d="M6,140 Q60,84 114,140 Z" fill="#ded2b4" stroke="#1c2230" stroke-width="2"/>
+    <circle cx="60" cy="54" r="29" fill="#ded2b4" stroke="#1c2230" stroke-width="2"/>
+    <circle cx="49" cy="55" r="2.2" fill="#1c2230"/>
+    <circle cx="71" cy="55" r="2.2" fill="#1c2230"/>
+    ${hair}
+    ${extra||''}
+  </svg>`;
+}
+const HAIR = {
+  laurel: `<path d="M32,42 Q60,20 88,42" fill="none" stroke="#c9b47a" stroke-width="4"/><path d="M34,40 l-4,-6 M42,34 l-3,-7 M78,34 l3,-7 M86,40 l4,-6" stroke="#c9b47a" stroke-width="2.5" stroke-linecap="round"/>`,
+  cap_side: `<path d="M29,46 Q30,18 60,17 Q90,18 91,46 Q75,32 60,33 Q45,32 29,46 Z" fill="#20242f"/>`,
+  cap_wave: `<path d="M28,44 Q26,14 60,15 Q94,14 92,44 Q84,26 60,27 Q36,26 28,44 Z" fill="#20242f"/>`,
+  cap_swept: `<path d="M28,42 Q34,14 64,16 Q92,18 90,42 Q78,22 58,24 Q40,25 28,42 Z" fill="#20242f"/>`,
+  cap_full: `<path d="M27,48 Q24,12 60,12 Q96,12 93,48 Q88,20 60,20 Q32,20 27,48 Z" fill="#20242f"/>`,
+  cap_neat: `<path d="M29,44 Q28,16 60,16 Q92,16 91,44 Q82,24 60,25 Q38,24 29,44 Z" fill="#242938"/>`
+};
+const EXTRA = {
+  none:'',
+  glasses:`<circle cx="49" cy="55" r="7" fill="none" stroke="#1c2230" stroke-width="2"/><circle cx="71" cy="55" r="7" fill="none" stroke="#1c2230" stroke-width="2"/><line x1="56" y1="55" x2="64" y2="55" stroke="#1c2230" stroke-width="2"/>`,
+  mustache:`<path d="M46,68 Q60,74 74,68 Q60,64 46,68 Z" fill="#20242f"/>`,
+  mustache_big:`<path d="M42,67 Q60,76 78,67 Q60,70 42,67 Z" fill="#20242f"/>`,
+  bowtie:`<path d="M44,124 L58,118 L58,130 Z M76,124 L62,118 L62,130 Z" fill="#c17d43"/>`,
+  necktie:`<path d="M55,116 L65,116 L61,126 L59,126 Z" fill="#5fe1e8"/>`,
+  collar:`<path d="M20,140 L48,116 L60,128 L72,116 L100,140 Z" fill="#f2efe6" opacity=".9"/>`,
+  pipe:`<path d="M76,70 Q86,70 86,64" fill="none" stroke="#20242f" stroke-width="3" stroke-linecap="round"/><ellipse cx="90" cy="63" rx="4" ry="3" fill="#20242f"/>`
+};
+const DATA = [
+  {
+    era:'antiguo', year:'~400 a.C.', name:'Demócrito', tag:'Filosofía',
+    avatar:bust(HAIR.laurel, EXTRA.none),
+    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Demokrit.jpg?width=400',
+    desc:[
+      'Propuso que toda la materia está formada por partículas diminutas, indivisibles e indestructibles a las que llamó "átomos" (del griego, "sin división"), separadas entre sí por espacio vacío.',
+      'Fue una idea puramente filosófica: no se basó en experimentos, sino en razonamiento lógico sobre si la materia podía dividirse infinitamente.'
+    ],
+    svg:`<svg viewBox="0 0 240 200"><circle cx="60" cy="100" r="26" fill="#e9dfc4"/><circle cx="150" cy="60" r="26" fill="#e9dfc4"/><circle cx="150" cy="145" r="26" fill="#e9dfc4"/>
+    <text x="60" y="104" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#0d1017">átomo</text>
+    <text x="120" y="110" font-size="9" font-family="IBM Plex Mono" fill="#8993a6" text-anchor="middle">espacio vacío</text>
+    </svg>`
+  },
+  {
+    era:'clasico', year:'1803', name:'John Dalton', tag:'Modelo de la esfera maciza',
+    avatar:bust(HAIR.cap_side, EXTRA.collar),
+    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/John Dalton by Charles Turner.jpg?width=400',
+    desc:[
+      'Formuló el primer modelo atómico con base científica: el átomo es una esfera maciza, indivisible e indestructible, como una diminuta bola de billar.',
+      'Postuló que todos los átomos de un mismo elemento son idénticos entre sí, y que se combinan en proporciones fijas y sencillas para formar compuestos.'
+    ],
+    svg:`<svg viewBox="0 0 240 200"><circle cx="120" cy="100" r="55" fill="#c17d43"/>
+    <text x="120" y="104" font-size="10" font-family="IBM Plex Mono" text-anchor="middle" fill="#0d1017">esfera maciza</text>
+    <text x="120" y="118" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#0d1017">indivisible</text>
+    </svg>`
+  },
+  {
+    era:'clasico', year:'1897', name:'J. J. Thomson', tag:'Modelo del "pudín de pasas"',
+    avatar:bust(HAIR.cap_wave, EXTRA.mustache),
+    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/J.J Thomson.jpg?width=400',
+    desc:[
+      'Descubrió el electrón, la primera partícula subatómica identificada, demostrando que el átomo sí es divisible.',
+      'Propuso que el átomo es una esfera de carga positiva con electrones (carga negativa) incrustados en su interior, distribuidos de forma que el átomo resulta neutro en conjunto.'
+    ],
+    svg:`<svg viewBox="0 0 240 200"><circle cx="120" cy="100" r="55" fill="#c17d43" opacity=".55"/>
+    <circle cx="95" cy="80" r="6" fill="#0d1017"/><circle cx="140" cy="70" r="6" fill="#0d1017"/>
+    <circle cx="150" cy="115" r="6" fill="#0d1017"/><circle cx="105" cy="125" r="6" fill="#0d1017"/><circle cx="130" cy="100" r="6" fill="#0d1017"/>
+    <text x="120" y="35" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">carga positiva (esfera)</text>
+    <text x="120" y="180" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">electrones (−)</text>
+    </svg>`
+  },
+  {
+    era:'clasico', year:'1909', name:'Robert Millikan', tag:'Experimento de la gota de aceite',
+    avatar:bust(HAIR.cap_neat, EXTRA.glasses),
+    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Robert Andrews Millikan 1920s.jpg?width=400',
+    desc:[
+      'Diseñó el experimento de la gota de aceite: pequeñas gotas cargadas se equilibraban entre dos placas metálicas con carga opuesta, controlando la fuerza eléctrica y la gravedad.',
+      'Con esto midió con precisión la carga eléctrica del electrón, lo que permitió calcular también su masa y confirmar experimentalmente su existencia.'
+    ],
+    svg:`<svg viewBox="0 0 240 200">
+    <rect x="40" y="30" width="160" height="10" fill="#c17d43"/><text x="120" y="24" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">placa (+)</text>
+    <rect x="40" y="160" width="160" height="10" fill="#5fe1e8"/><text x="120" y="188" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">placa (−)</text>
+    <circle cx="120" cy="95" r="10" fill="#e9dfc4"/><text x="150" y="99" font-size="9" font-family="IBM Plex Mono" fill="#8993a6">gota de aceite</text>
+    <line x1="120" y1="60" x2="120" y2="82" stroke="#5fe1e8" stroke-width="1.5" marker-end="url(#a1)"/>
+    <defs><marker id="a1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#5fe1e8"/></marker></defs>
+    </svg>`
+  },
+  {
+    era:'clasico', year:'1911', name:'Ernest Rutherford', tag:'Modelo nuclear',
+    avatar:bust(HAIR.cap_full, EXTRA.mustache_big),
+    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Ernest Rutherford LOC.jpg?width=400',
+    desc:[
+      'A partir del experimento de la lámina de oro (bombardeó una lámina delgada con partículas alfa) descubrió que la mayor parte del átomo es espacio vacío.',
+      'Propuso el modelo nuclear: un núcleo pequeño, denso y con carga positiva concentra casi toda la masa del átomo, mientras los electrones giran alrededor de él a gran distancia.'
+    ],
+    svg:`<svg viewBox="0 0 240 200"><circle cx="120" cy="100" r="80" fill="none" stroke="#2a3040" stroke-dasharray="2 4"/>
+    <circle cx="120" cy="100" r="10" fill="#c17d43"/>
+    <circle cx="120" cy="30" r="5" fill="#5fe1e8"/><circle cx="200" cy="100" r="5" fill="#5fe1e8"/><circle cx="60" cy="150" r="5" fill="#5fe1e8"/>
+    <text x="120" y="118" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">núcleo (+)</text>
+    <text x="120" y="14" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">electrón</text>
+    <text x="120" y="196" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">espacio vacío</text>
+    </svg>`
+  },
+  {
+    era:'clasico', year:'1913', name:'Niels Bohr', tag:'Modelo de niveles de energía',
+    avatar:bust(HAIR.cap_swept, EXTRA.pipe),
+    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Niels Bohr - LOC - ggbain - 35303.jpg?width=400',
+    desc:[
+      'Corrigió el modelo de Rutherford proponiendo que los electrones giran en órbitas circulares fijas, llamadas niveles de energía, sin caer sobre el núcleo.',
+      'Cada nivel tiene una energía definida; un electrón solo cambia de órbita si absorbe o libera una cantidad exacta de energía (fotón).'
+    ],
+    svg:`<svg viewBox="0 0 240 200"><circle cx="120" cy="100" r="10" fill="#c17d43"/>
+    <circle cx="120" cy="100" r="30" fill="none" stroke="#5fe1e8" stroke-width="1"/>
+    <circle cx="120" cy="100" r="55" fill="none" stroke="#5fe1e8" stroke-width="1"/>
+    <circle cx="120" cy="100" r="80" fill="none" stroke="#5fe1e8" stroke-width="1"/>
+    <circle cx="150" cy="100" r="4" fill="#e9dfc4"/><circle cx="65" cy="100" r="4" fill="#e9dfc4"/><circle cx="120" cy="20" r="4" fill="#e9dfc4"/>
+    <text x="120" y="118" font-size="8" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">núcleo</text>
+    <text x="200" y="60" font-size="9" font-family="IBM Plex Mono" fill="#8993a6">n=1,2,3...</text>
+    </svg>`
+  },
+  {
+    era:'cuantico', year:'1924', name:'Louis de Broglie', tag:'Dualidad onda–partícula',
+    avatar:bust(HAIR.cap_side, EXTRA.none),
+    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Broglie Big.jpg?width=400',
+    desc:[
+      'Propuso que el electrón no se comporta únicamente como una partícula, sino también como una onda, extendiendo a la materia lo que ya se sabía de la luz.',
+      'Esta idea de la dualidad onda–partícula abrió el camino hacia un modelo atómico basado en la probabilidad, en lugar de órbitas fijas y definidas.'
+    ],
+    svg:`<svg viewBox="0 0 240 200"><circle cx="120" cy="100" r="10" fill="#c17d43"/>
+    <path d="M40,100 Q60,60 80,100 T120,100 T160,100 T200,100" fill="none" stroke="#5fe1e8" stroke-width="2"/>
+    <text x="120" y="140" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">electrón = partícula + onda</text>
+    </svg>`
+  },
+  {
+    era:'cuantico', year:'1926', name:'Erwin Schrödinger', tag:'Modelo mecánico-cuántico',
+    avatar:bust(HAIR.cap_neat, EXTRA.bowtie),
+    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Erwin Schrödinger (1933).jpg?width=400',
+    desc:[
+      'Desarrolló una ecuación matemática que describe al electrón como una onda de probabilidad, no como una partícula en una trayectoria fija.',
+      'De ahí surge el concepto de orbital: una región del espacio alrededor del núcleo donde existe mayor probabilidad de encontrar al electrón (una "nube electrónica").'
+    ],
+    svg:`<svg viewBox="0 0 240 200"><circle cx="120" cy="100" r="9" fill="#c17d43"/>
+    <ellipse cx="120" cy="100" rx="70" ry="70" fill="url(#cloud)"/>
+    <defs><radialGradient id="cloud"><stop offset="0%" stop-color="#5fe1e8" stop-opacity=".55"/><stop offset="70%" stop-color="#5fe1e8" stop-opacity=".12"/><stop offset="100%" stop-color="#5fe1e8" stop-opacity="0"/></radialGradient></defs>
+    <text x="120" y="180" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">nube de probabilidad (orbital)</text>
+    </svg>`
+  },
+  {
+    era:'cuantico', year:'1927', name:'Werner Heisenberg', tag:'Principio de incertidumbre',
+    avatar:bust(HAIR.cap_wave, EXTRA.necktie),
+    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Bundesarchiv Bild183-R57262, Werner Heisenberg.jpg?width=400',
+    desc:[
+      'Formuló el principio de incertidumbre: es imposible conocer con exactitud, al mismo tiempo, la posición exacta y la velocidad (momento) de un electrón.',
+      'Este principio reforzó la idea de que el átomo solo puede describirse en términos de probabilidades, y no de trayectorias precisas.'
+    ],
+    svg:`<svg viewBox="0 0 240 200"><circle cx="120" cy="100" r="9" fill="#c17d43"/>
+    <circle cx="150" cy="70" r="4" fill="#5fe1e8"/>
+    <circle cx="150" cy="70" r="18" fill="none" stroke="#5fe1e8" stroke-width="1" stroke-dasharray="1 3"/>
+    <text x="185" y="55" font-size="8" font-family="IBM Plex Mono" fill="#8993a6">¿posición?</text>
+    <text x="185" y="90" font-size="8" font-family="IBM Plex Mono" fill="#8993a6">¿velocidad?</text>
+    <text x="120" y="180" font-size="9" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">no se pueden saber ambas a la vez</text>
+    </svg>`
+  },
+  {
+    era:'cuantico', year:'1932', name:'James Chadwick', tag:'Descubrimiento del neutrón',
+    avatar:bust(HAIR.cap_full, EXTRA.collar),
+    photo:'https://commons.wikimedia.org/wiki/Special:FilePath/James Chadwick.jpg?width=400',
+    desc:[
+      'Descubrió el neutrón, una partícula subatómica sin carga eléctrica presente en el núcleo, junto a los protones.',
+      'Con este hallazgo se completó la estructura básica del átomo: protones y neutrones en el núcleo, y electrones alrededor de él.'
+    ],
+    svg:`<svg viewBox="0 0 240 200"><circle cx="105" cy="95" r="12" fill="#c17d43"/><circle cx="130" cy="105" r="12" fill="#c17d43"/><circle cx="118" cy="80" r="12" fill="#8993a6"/><circle cx="140" cy="85" r="12" fill="#8993a6"/>
+    <circle cx="60" cy="40" r="4" fill="#5fe1e8"/>
+    <text x="105" y="130" font-size="8" font-family="IBM Plex Mono" text-anchor="middle" fill="#c17d43">protón (+)</text>
+    <text x="150" y="130" font-size="8" font-family="IBM Plex Mono" text-anchor="middle" fill="#8993a6">neutrón (0)</text>
+    <text x="60" y="25" font-size="8" font-family="IBM Plex Mono" text-anchor="middle" fill="#5fe1e8">electrón (−)</text>
+    </svg>`
+  }
+];
+
+const eraNames = {antiguo:'Antigüedad — la idea filosófica', clasico:'Siglo XIX–XX — el modelo clásico', cuantico:'Siglo XX — la revolución cuántica'};
+
+const tl = document.getElementById('timeline');
+tl.innerHTML = '<div class="spine"></div>';
+let lastEra = null;
+
+DATA.forEach((s, i) => {
+  if(s.era !== lastEra){
+    const label = document.createElement('div');
+    label.className = 'era-label';
+    label.textContent = eraNames[s.era];
+    tl.appendChild(label);
+    lastEra = s.era;
+  }
+  const node = document.createElement('div');
+  node.className = 'node';
+  node.dataset.era = s.era;
+  const fallbackSrc = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(s.avatar)));
+  const photoSrc = encodeURI(s.photo);
+  node.innerHTML = `
+    <div class="dot"></div>
+    <button class="node-head" aria-expanded="false">
+      <span class="portrait"><img src="${photoSrc}" alt="Retrato de ${s.name}" loading="lazy" data-fb="${fallbackSrc}" onerror="this.onerror=null;this.src=this.dataset.fb;"></span>
+      <span class="year mono">${s.year}</span>
+      <span class="node-name">${s.name}</span>
+      <span class="node-tag">${s.tag}</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <div class="node-body">
+      <div class="node-body-inner">
+        <div class="diagram-col">
+          <div class="portrait-card">
+            <span class="portrait-lg"><img src="${photoSrc}" alt="Retrato de ${s.name}" loading="lazy" data-fb="${fallbackSrc}" onerror="this.onerror=null;this.src=this.dataset.fb;"></span>
+            <div class="who"><strong>${s.name}</strong><span>${s.year}</span></div>
+          </div>
+          <div class="diagram">${s.svg}</div>
+        </div>
+        <div class="content">
+          <h4>Aporte a la teoría atómica</h4>
+          ${s.desc.map(p => `<p>${p}</p>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+  const btn = node.querySelector('.node-head');
+  btn.addEventListener('click', () => {
+    const open = node.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  tl.appendChild(node);
+});
+</script>
+</body>
+</html>
